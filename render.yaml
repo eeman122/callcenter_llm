@@ -1,12 +1,14 @@
 services:
   - name: llm-backend
-    type: web
-    runtime: python
+    type: web  # Must be 'web' not 'worker'
+    env: python
+    plan: free
     build:
       path: ./backend
       dockerfile: Dockerfile
-    env: python
     envVars:
+      - key: PORT
+        value: 8000  # Default port if not set otherwise
       - key: ASSEMBLYAI_API_KEY
         fromGroup: llm-secrets
       - key: GROQ_API_KEY
