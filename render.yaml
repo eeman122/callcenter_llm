@@ -1,0 +1,26 @@
+services:
+  - name: llm-backend
+    type: web
+    runtime: python
+    build:
+      path: ./backend
+      dockerfile: Dockerfile
+    env: python
+    envVars:
+      - key: ASSEMBLYAI_API_KEY
+        fromGroup: llm-secrets
+      - key: GROQ_API_KEY
+        fromGroup: llm-secrets
+      - key: HUGGINGFACE_API_TOKEN
+        fromGroup: llm-secrets
+
+  - name: llm-frontend
+    type: web
+    runtime: python
+    build:
+      path: ./frontend
+      dockerfile: Dockerfile
+    env: python
+    envVars:
+      - key: BACKEND_URL
+        value: https://llm-backend.onrender.com
